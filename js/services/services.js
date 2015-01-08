@@ -96,8 +96,8 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             var msg = text;
             // Collect errors to display from the server response
             var errors = [];
-            if (serverError && serverError.error_description) {
-                errors.push(serverError.error_description);
+            if (serverError && serverError.message) {
+                errors.push(serverError.message);
             }
 
             if (serverError && serverError.modelState) {

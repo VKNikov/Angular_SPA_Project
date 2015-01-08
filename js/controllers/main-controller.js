@@ -28,8 +28,15 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
         $scope.authenticate = authenticationService;
         $scope.message = notifyService;
         $scope.register = function(userData) {
-            console.log(userData);
-            $scope.authenticate.register(userData);
-            $scope.message.success("Registration successful!", "success")
+            $scope.authenticate.register(userData)
+                .$promise
+                .then(function(data) {
+                    $scope.message.success("Registration successful!", "success")
+                },
+                function(data) {
+                    console.log(data);
+                    $scope.message.failure("Registration unsuccessful!", "error", data.data)
+                });
+
         }
     }]);
