@@ -1,4 +1,43 @@
 <div class="box">
-    <h2>Login</h2>
-    TODO
+    <form name="regForm">
+
+
+    <h2>Register</h2>
+    <p>
+        <label for="username">Username:</label>
+        <input type="text" id="username" data-ng-model="userData.username" required placeholder="Please type in your name..."/>
+    </p>
+    <p>
+        <label for="password">Password:</label>
+        <input type="password" id="password" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
+
+        <label for="confirmPassword">Confirm password:</label>
+        <input type="password" id="confirmPassword" data-ng-model="userData.confirmPassword" required  data-match="userData.password" placeholder="Confirm your password..." name="confirmPassword"/>
+    <span data-ng-show="regForm.confirmPassword.$error.match">Passwords do not match!</span>
+    </p>
+    <p>
+        <label for="name">Name:</label>
+        <input type="text" id="name" data-ng-model="userData.name" required placeholder="Please type in your name..."/>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" data-ng-model="userData.email" required placeholder="Please type in your email..."/>
+    </p>
+    <p>
+        <label for="name">Phone:</label>
+        <input type="tel" id="phone" data-ng-model="userData.phone" required placeholder="Please type in your phone..."/>
+    </p>
+
+    <p>
+        <label for="town">Town:</label>
+        <select id="town" data-ng-model="userData.townId">
+            <option value="null">(None)</option>
+            <option data-ng-repeat="town in towns"
+                    value="{{town.id}}">{{town.name}}</option>
+        </select>
+    </p>
+    <p>
+        <a data-ng-click="register(userData)" class="button">Register</a>
+        <a href="#/login" class="link">Login</a>
+    <p>
+    </form>
 </div>

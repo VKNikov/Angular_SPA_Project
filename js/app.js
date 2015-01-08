@@ -2,12 +2,12 @@
  * Created by VKNikov on 28.12.2014 г..
  */
 
-var app = angular.module('app', ["ngResource", "ngRoute"])
+var app = angular.module('app', ["ngResource", "ngRoute", "validation.match"])
     .config(['$routeProvider', function($routeProvider) {
         "use strict";
 
         $routeProvider
-            .when('/home',
+            .when('/',
             {
                 templateUrl: "views/home.html",
                 controller: "MainController"
@@ -24,7 +24,7 @@ var app = angular.module('app', ["ngResource", "ngRoute"])
             })
             .otherwise({redirectTo: '/'})
     }])
-    .constant('baseUrl', 'http://softuni-ads.azurewebsites.net');
+    .constant('baseUrl', 'http://softuni-ads.azurewebsites.net/api/');
 
 
 

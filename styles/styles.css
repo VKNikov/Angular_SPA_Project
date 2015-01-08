@@ -1,0 +1,26 @@
+html, body {
+    background-color: #E1EFD9;
+}
+
+.box {
+    background-color: #A9D18E;
+    padding: 10px;
+    border: 1px solid;
+    margin: 10px;
+}
+
+input {
+    width: 200px;
+}
+
+header {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 99%;
+    height: 50px;
+}

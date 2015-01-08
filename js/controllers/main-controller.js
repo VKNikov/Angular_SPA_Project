@@ -16,7 +16,20 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
         "use strict";
         //TODO
     }])
-    .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'notifyService', function($scope, $location, authenticationService, notifyService) {
+    .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'adsService', 'notifyService', function($scope, $location, authenticationService, adsService, notifyService) {
         "use strict";
-        //TODO
+
+        adsService.getAllTowns()
+            .$promise
+            .then(function(data) {
+                $scope.towns = data;
+            });
+
+        $scope.authenticate = authenticationService;
+        $scope.message = notifyService;
+        $scope.register = function(userData) {
+            console.log(userData);
+            $scope.authenticate.register(userData);
+            $scope.message.success("Registration successful!", "success")
+        }
     }]);

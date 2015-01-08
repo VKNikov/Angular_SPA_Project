@@ -5,7 +5,7 @@
 app.factory('authenticationService', ['$resource', 'baseUrl', function($resource, baseUrl) {
     "use strict";
 
-    var resource = $resource();
+
 
     function userLogin() {
         //TODO
@@ -15,8 +15,9 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         //TODO
     }
 
-    function userRegister() {
-        //TODO
+    function userRegister(user) {
+        var resource = $resource(baseUrl + "user/register");
+        return resource.save(user);
     }
 
     function getCurrentUser() {
@@ -36,18 +37,18 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     return {
-        login: userLogin(),
-        logout: userLogout(),
-        register: userRegister(),
-        getCurrentUser: getCurrentUser(),
-        isLoggedIn: isLoggedIn(),
-        isAdmin: isAdmin(),
-        getHeaders: getHeaders()
+        login: userLogin,
+        logout: userLogout,
+        register: userRegister,
+        getCurrentUser: getCurrentUser,
+        isLoggedIn: isLoggedIn,
+        isAdmin: isAdmin,
+        getHeaders: getHeaders
     }
 }])
     .factory('adsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
         "use strict";
-        var resource = $resource(url);
+        var resource = $resource(baseUrl + "towns");
 
         function getAllAds() {
             return resource.query;
@@ -62,15 +63,15 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         }
 
         function getAllTowns () {
-            //TODO
+            return resource.query();
         }
 
         return {
-            getAllAds: getAllAds(),
-            getAdsWithPaging: getAdsWithPaging(),
-            getAdsWithFilter: getAdsWithFilter(),
-            getAllCategories: getAllCategories(),
-            getAllTowns: getAllTowns()
+            getAllAds: getAllAds,
+            //getAdsWithPaging: getAdsWithPaging(),
+            getAdsWithFilter: getAdsWithFilter,
+            getAllCategories: getAllCategories,
+            getAllTowns: getAllTowns
         }
     }])
     .factory('notifyService', [function() {
@@ -124,9 +125,9 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         }
 
         return {
-            info: operationInfo(),
-            success: operationSuccessful(),
-            failure: operationFailure()
+            info: operationInfo,
+            success: operationSuccessful,
+            failure: operationFailure
         }
     }])
     .factory('townsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
