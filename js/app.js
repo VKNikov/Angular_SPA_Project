@@ -2,15 +2,15 @@
  * Created by VKNikov on 28.12.2014 г..
  */
 
-var app = angular.module('app', ["ngResource", "ngRoute", "validation.match"])
-    .config(['$routeProvider', function($routeProvider) {
+var app = angular.module('app', ["ngResource", "ngRoute", "validation.match", "LocalStorageModule"])
+    .config(['$routeProvider', 'localStorageServiceProvider', function($routeProvider, localStorageServiceProvider) {
         "use strict";
 
         $routeProvider
             .when('/',
             {
                 templateUrl: "views/home.html",
-                controller: "MainController"
+                controller: "HomeController"
             })
             .when('/login',
             {
@@ -22,7 +22,9 @@ var app = angular.module('app', ["ngResource", "ngRoute", "validation.match"])
                 templateUrl: "views/register.html",
                 controller: "RegisterController"
             })
-            .otherwise({redirectTo: '/'})
+            .otherwise({redirectTo: '/'});
+
+        //localStorageServiceProvider.setStorageType('localStorage');
     }])
     .constant('baseUrl', 'http://softuni-ads.azurewebsites.net/api/');
 

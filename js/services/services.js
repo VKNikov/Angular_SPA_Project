@@ -5,10 +5,11 @@
 app.factory('authenticationService', ['$resource', 'baseUrl', function($resource, baseUrl) {
     "use strict";
 
+    var key = 'user';
 
-
-    function userLogin() {
-        //TODO
+    function userLogin(user) {
+        var resource = $resource(baseUrl + "user/login");
+        return resource.save(angular.toJson(user))
     }
 
     function userLogout() {
@@ -20,10 +21,6 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         return resource.save(user);
     }
 
-    function getCurrentUser() {
-        //TODO
-    }
-
     function isLoggedIn() {
         //TODO
     }
@@ -33,25 +30,42 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function getHeaders() {
-        //TODO
+        var headers = {};
+        var userData = getUserData();
+        if(userData) {
+            headers.Authorization = 'Bearer ' + userData.access_token;
+        }
+        return headers;
+    }
+
+    function saveUserData(data) {
+        //localStorageServiceProvider.set(key, data);
+        localStorage.setItem(key, data);
+    }
+
+    function getUserData() {
+        //localStorageServiceProvider.get(key);
+        return angular.fromJson(localStorage.getItem(key));
     }
 
     return {
         login: userLogin,
         logout: userLogout,
         register: userRegister,
-        getCurrentUser: getCurrentUser,
         isLoggedIn: isLoggedIn,
         isAdmin: isAdmin,
-        getHeaders: getHeaders
+        getHeaders: getHeaders,
+        getCurrentUser: getUserData,
+        saveCurrentUser: saveUserData
     }
 }])
     .factory('adsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
         "use strict";
-        var resource = $resource(baseUrl + "towns");
+        //var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
+        var resource = $resource(baseUrl + "ads");
 
         function getAllAds() {
-            return resource.query;
+            return resource.get();
         }
 
         function getAdsWithFilter() {
@@ -63,7 +77,20 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         }
 
         function getAllTowns () {
+            resource = $resource(baseUrl + "towns");
             return resource.query();
+        }
+
+        function editAd(adId, ad) {
+            return resource.update({ id: adId}, ad);
+        }
+
+        function getAdById(adId) {
+            return resource.query({id: adId});
+        }
+
+        function addAd(ad) {
+            return resource.save(ad);
         }
 
         return {
@@ -94,6 +121,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
 
         function operationFailure(text, type, serverError) {
             var msg = text;
+
             // Collect errors to display from the server response
             var errors = [];
             if (serverError && serverError.message) {

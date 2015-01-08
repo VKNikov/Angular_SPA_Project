@@ -7,14 +7,36 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
 
     $scope.authentication = authenticationService;
     }])
-    .controller('HomeController', ['$scope', '$rootScope', 'adsService', function($scope, $rootScope, adsService) {
+    .controller('HomeController', ['$scope', '$rootScope', 'adsService', 'notifyService', function($scope, $rootScope, adsService, notifyService) {
         "use strict";
 
-        //TODO
+        $scope.message = notifyService;
+        adsService.getAllAds()
+            .$promise
+            .then(function(data) {
+                console.log(data);
+                $scope.adsData = data;
+            },
+            function(data) {
+                $scope.message.failure("There was an error!", "error", data.data);
+            })
     }])
     .controller('LoginController', ['$scope', '$location', 'authenticationService', 'notifyService',  function($scope, $location, authenticationService, notifyService) {
         "use strict";
-        //TODO
+
+        $scope.message = notifyService;
+        $scope.authenticate = authenticationService;
+        $scope.login = function(userData) {
+            $scope.authenticate.login(userData)
+                .$promise
+                .then(function(data) {
+                    $scope.message.success("Login successful!", "success");
+                    $scope.authenticate.saveCurrentUser(data)
+                },
+                function(data) {
+                    $scope.message.failure("Login unsuccessful!", "error", data.data);
+                });
+        }
     }])
     .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'adsService', 'notifyService', function($scope, $location, authenticationService, adsService, notifyService) {
         "use strict";
@@ -31,10 +53,9 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
             $scope.authenticate.register(userData)
                 .$promise
                 .then(function(data) {
-                    $scope.message.success("Registration successful!", "success")
+                    $scope.message.success("Registration successful!", "success");
                 },
                 function(data) {
-                    console.log(data);
                     $scope.message.failure("Registration unsuccessful!", "error", data.data)
                 });
 
