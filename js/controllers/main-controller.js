@@ -75,4 +75,27 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 });
 
         }
+    }])
+    .controller('RightSidebarController', ['$scope', '$location', 'authenticationService', 'categoriesService', 'townsService', 'notifyService',
+        function($scope, $location, authenticationService, categoriesService, townsService, notifyService) {
+            categoriesService.getAllCategories()
+                .$promise
+                .then(function(data) {
+                    "use strict";
+                    $scope.categories = data;
+                },
+                function(data) {
+                "use strict";
+                notifyService.failure('Cannot load categories!', 'error', data)
+            });
+            townsService.getAllTowns()
+                .$promise
+                .then(function(data) {
+                    "use strict";
+                    $scope.towns = data;
+                },
+                function(data) {
+                    "use strict";
+                    notifyService.failure('Cannot load towns!', 'error', data)
+                });
     }]);

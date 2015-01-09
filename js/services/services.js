@@ -76,15 +76,6 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             //TODO
         }
 
-        function getAllCategories() {
-            //TODO
-        }
-
-        function getAllTowns () {
-            var resource = $resource(baseUrl + "towns");
-            return resource.query();
-        }
-
         function editAd(adId, ad) {
             return resource.update({ id: adId}, ad);
         }
@@ -100,8 +91,32 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         return {
             getAllAds: getAllAds,
             getAdsWithPaging: getAdsWithPaging,
-            getAdsWithFilter: getAdsWithFilter,
-            getAllCategories: getAllCategories,
+            getAdsWithFilter: getAdsWithFilter
+        }
+    }])
+    .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {
+        "use strict";
+
+        var resource = $resource(baseUrl + 'categories');
+
+        function getAllCategories() {
+            return resource.query();
+        }
+
+        return {
+            getAllCategories: getAllCategories
+        }
+    }])
+    .factory('townsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
+        "use strict";
+
+        var resource = $resource(baseUrl + 'towns');
+
+        function getAllTowns () {
+            return resource.query();
+        }
+
+        return {
             getAllTowns: getAllTowns
         }
     }])
@@ -161,13 +176,5 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             success: operationSuccessful,
             failure: operationFailure
         }
-    }])
-    .factory('townsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
-        "use strict";
-        //TODO
-    }])
-    .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {
-        "use strict";
-        //TODO
     }]);
 
