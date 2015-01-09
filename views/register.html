@@ -8,23 +8,28 @@
         <input type="text" id="username" data-ng-model="userData.username" required placeholder="Please type in your name..."/>
     </p>
     <p>
-        <label for="password">Password:</label>
+        <label for="password">Password:
         <input type="password" id="password" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
+        </label>
 
-        <label for="confirmPassword">Confirm password:</label>
+        <label for="confirmPassword">Confirm password:
         <input type="password" id="confirmPassword" data-ng-model="userData.confirmPassword" required  data-match="userData.password" placeholder="Confirm your password..." name="confirmPassword"/>
+        </label>
     <span data-ng-show="regForm.confirmPassword.$error.match">Passwords do not match!</span>
     </p>
     <p>
-        <label for="name">Name:</label>
+        <label for="name">Name:
         <input type="text" id="name" data-ng-model="userData.name" required placeholder="Please type in your name..."/>
+        </label>
 
-        <label for="email">Email:</label>
+        <label for="email">Email:
         <input type="email" id="email" data-ng-model="userData.email" required placeholder="Please type in your email..."/>
+        </label>
     </p>
     <p>
-        <label for="name">Phone:</label>
+        <label for="name">Phone:
         <input type="tel" id="phone" data-ng-model="userData.phone" required placeholder="Please type in your phone..."/>
+        </label>
     </p>
 
     <p>

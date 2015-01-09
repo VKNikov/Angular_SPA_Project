@@ -19,7 +19,22 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
             },
             function(data) {
                 $scope.message.failure("There was an error!", "error", data.data);
-            })
+            });
+
+        $scope.startPage = 1;
+        $scope.currentPage = 1;
+        $scope.pageSize = 5;
+        $scope.pageChanged = function() {
+            adsService.getAdsWithPaging($scope.pageSize, $scope.currentPage)
+                .$promise
+                .then(function(data) {
+                    console.log(data);
+                    $scope.adsData = data;
+                },
+                function(data) {
+                    $scope.message.failure("There was an error!", "error", data.data);
+                });
+        }
     }])
     .controller('LoginController', ['$scope', '$location', 'authenticationService', 'notifyService',  function($scope, $location, authenticationService, notifyService) {
         "use strict";

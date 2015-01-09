@@ -2,7 +2,7 @@
  * Created by VKNikov on 28.12.2014 г..
  */
 
-var app = angular.module('app', ["ngResource", "ngRoute", "validation.match", "LocalStorageModule"])
+var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'LocalStorageModule', 'ui.bootstrap'])
     .config(['$routeProvider', 'localStorageServiceProvider', function($routeProvider, localStorageServiceProvider) {
         "use strict";
 

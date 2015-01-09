@@ -61,10 +61,14 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
 }])
     .factory('adsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
         "use strict";
-        //var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
-        var resource = $resource(baseUrl + "ads");
 
         function getAllAds() {
+            var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
+            return resource.get();
+        }
+
+        function getAdsWithPaging(pageSize, nextPage) {
+            var resource = $resource(baseUrl + 'ads?pagesize=' +  pageSize + '&startpage=' + nextPage);
             return resource.get();
         }
 
@@ -77,7 +81,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         }
 
         function getAllTowns () {
-            resource = $resource(baseUrl + "towns");
+            var resource = $resource(baseUrl + "towns");
             return resource.query();
         }
 
@@ -95,7 +99,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
 
         return {
             getAllAds: getAllAds,
-            //getAdsWithPaging: getAdsWithPaging(),
+            getAdsWithPaging: getAdsWithPaging,
             getAdsWithFilter: getAdsWithFilter,
             getAllCategories: getAllCategories,
             getAllTowns: getAllTowns
