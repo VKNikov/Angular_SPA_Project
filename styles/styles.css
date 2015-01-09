@@ -7,12 +7,24 @@ html, body {
 .box {
     background-color: #A9D18E;
     padding: 10px;
-    border: 1px solid;
+    border: 2px solid #759E59;
     margin: 10px;
+    border-radius: 5px;
 }
 
 .ads {
 
+}
+
+.pagination {
+    display: inline;
+    margin: 0 auto;
+}
+
+.selected {
+    background-color: darkorange;
+    padding: 5px;
+    border-radius: 2px;
 }
 
 input {

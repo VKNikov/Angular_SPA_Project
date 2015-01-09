@@ -1,5 +1,9 @@
 <div class="box">
     <h2>Home Screen</h2>
+    <div class="text-center">
+        <!--<img src="images/loading.gif" data-ng-hide="ready" alt="Waiting image"/>-->
+        <p data-ng-hide="ready">Loading ads. Please wait...</p>
+    </div>
     <ul class="ads">
         <li data-ng-repeat="ad in adsData.ads" class="box">
             <h1>{{ad.title}}</h1>
@@ -16,11 +20,14 @@
             </div>
         </li>
     </ul>
-    <pagination
-            page="startPage" total-items="adsData.numItems" items-per-page="pageSize" ng-model="currentPage"
-            ng-change="pageChanged()" boundary-links="true" previous-text="<" next-text=">" first-text="<<"
-            last-text=">>" max-size="9">
-    </pagination>
+    <div class="text-center">
+        <pagination
+                page="adsInfo.startPage" total-items="adsData.numItems" items-per-page="adsInfo.pageSize" ng-model="adsInfo.currentPage"
+                ng-change="pageChanged()" boundary-links="true" previous-text="<" next-text=">" first-text="<<"
+                last-text=">>" max-size="9">
+        </pagination>
+    </div>
+
     <div data-ng-if="adsData.ads.length==0" class="box no-data">
         No ads found.
     </div>

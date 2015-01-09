@@ -1,8 +1,8 @@
 <div class="box">
     <h2>Categories</h2>
     <ul class="sidebar-menu">
-    <li class="special">All</li>
-    <li data-ng-repeat="category in categories">
+    <li class="special" data-ng-class="{selected: selectedCategoryId == null}" data-ng-click="categoryClicked(null)">All</li>
+    <li data-ng-repeat="category in categories" data-ng-class="{selected: selectedCategoryId == category.id}" data-ng-click="categoryClicked(category.id)">
         {{category.name}}
     </li>
     </ul>
@@ -12,8 +12,8 @@
 <div class="box">
     <h2>Towns</h2>
     <ul class="sidebar-menu">
-        <li class="special">All</li>
-        <li data-ng-repeat="town in towns">
+        <li class="special" data-ng-class="{selected: selectedTownId == null}" data-ng-click="townClicked(null)">All</li>
+        <li data-ng-repeat="town in towns" data-ng-class="{selected: selectedTownId == town.id}" data-ng-click="townClicked(town.id)">
             {{town.name}}
         </li>
     </ul>

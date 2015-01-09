@@ -72,8 +72,14 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             return resource.get();
         }
 
-        function getAdsWithFilter() {
-            //TODO
+        function getFilteredAds(filterParams) {
+            var params = filterParams;
+            if(!params) {
+                params = {}
+            }
+
+            var resource = $resource(baseUrl + 'ads?');
+            return resource.get(params);
         }
 
         function editAd(adId, ad) {
@@ -91,7 +97,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         return {
             getAllAds: getAllAds,
             getAdsWithPaging: getAdsWithPaging,
-            getAdsWithFilter: getAdsWithFilter
+            getFilteredAds: getFilteredAds
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {

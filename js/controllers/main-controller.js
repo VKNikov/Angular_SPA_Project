@@ -13,28 +13,57 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
         $scope.message = notifyService;
         adsService.getAllAds()
             .$promise
-            .then(function(data) {
-                console.log(data);
+            .then(function (data) {
+                $scope.ready = true;
                 $scope.adsData = data;
             },
-            function(data) {
+            function (data) {
                 $scope.message.failure("There was an error!", "error", data.data);
             });
 
-        $scope.startPage = 1;
-        $scope.currentPage = 1;
-        $scope.pageSize = 5;
+        $scope.adsInfo = {
+            startPage: 1,
+            currentPage: 1,
+            pageSize: 5
+        };
+
         $scope.pageChanged = function() {
             adsService.getAdsWithPaging($scope.pageSize, $scope.currentPage)
                 .$promise
                 .then(function(data) {
-                    console.log(data);
                     $scope.adsData = data;
                 },
                 function(data) {
                     $scope.message.failure("There was an error!", "error", data.data);
                 });
-        }
+        };
+
+        $scope.filterParams = {};
+        $scope.$on('categorySelectionChanged', function(event, categoryId) {
+            $scope.filterParams.categoryId = categoryId;
+            $scope.startPage = 1;
+            adsService.getFilteredAds($scope.filterParams)
+                .$promise
+                .then(function(data) {
+                    $scope.adsData = data;
+                },
+                function(data) {
+                    $scope.message.failure("There was an error!", "error", data.data);
+                });
+        });
+
+        $scope.$on('townSelectionChanged', function(event, townId) {
+            $scope.filterParams.townId = townId;
+            $scope.startPage = 1;
+            adsService.getFilteredAds($scope.filterParams)
+                .$promise
+                .then(function(data) {
+                    $scope.adsData = data;
+                },
+                function(data) {
+                    $scope.message.failure("There was an error!", "error", data.data);
+                });
+        })
     }])
     .controller('LoginController', ['$scope', '$location', 'authenticationService', 'notifyService',  function($scope, $location, authenticationService, notifyService) {
         "use strict";
@@ -53,10 +82,10 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 });
         }
     }])
-    .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'adsService', 'notifyService', function($scope, $location, authenticationService, adsService, notifyService) {
+    .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'townsService', 'notifyService', function($scope, $location, authenticationService, townsService, notifyService) {
         "use strict";
 
-        adsService.getAllTowns()
+        townsService.getAllTowns()
             .$promise
             .then(function(data) {
                 $scope.towns = data;
@@ -76,8 +105,8 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
 
         }
     }])
-    .controller('RightSidebarController', ['$scope', '$location', 'authenticationService', 'categoriesService', 'townsService', 'notifyService',
-        function($scope, $location, authenticationService, categoriesService, townsService, notifyService) {
+    .controller('RightSidebarController', ['$scope', '$rootScope', '$location', 'authenticationService', 'categoriesService', 'townsService', 'notifyService',
+        function($scope, $rootScope, $location, authenticationService, categoriesService, townsService, notifyService) {
             categoriesService.getAllCategories()
                 .$promise
                 .then(function(data) {
@@ -98,4 +127,16 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                     "use strict";
                     notifyService.failure('Cannot load towns!', 'error', data)
                 });
+
+            $scope.categoryClicked = function(categoryId) {
+                "use strict";
+                $scope.selectedCategoryId = categoryId;
+                $rootScope.$broadcast("categorySelectionChanged", categoryId);
+            };
+
+            $scope.townClicked = function(townId) {
+                "use strict";
+                $scope.selectedTownId = townId;
+                $rootScope.$broadcast('townSelectionChanged', townId)
+            }
     }]);
