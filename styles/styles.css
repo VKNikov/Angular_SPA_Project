@@ -40,12 +40,13 @@ ul {
     margin-left: 0;
 }
 
-input {
-    width: 200px;
-}
+/*input {*/
+    /*width: 200px;*/
+/*}*/
 
 img {
     height: 25%;
+    width: 25%;
     max-width: 300px;
 }
 

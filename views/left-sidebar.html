@@ -7,7 +7,7 @@ TODO: implement logic to show different navigation menu for:
 
 -->
 
-<div data-ng-if="!authentication.isLoggedIn()" class="box">
+<div data-ng-if="authentication.isLoggedIn()" class="box">
     <h2>Navigation</h2>
     <ul class="sidebar-menu">
         <li><a href="#/">Home</a></li>
@@ -19,14 +19,14 @@ TODO: implement logic to show different navigation menu for:
 </div>
 
 <!-- Navigation box for anonymous site visitors -->
-<div data-ng-if="authentication.isLoggedIn()" class="box">
+<div data-ng-if="!authentication.isLoggedIn()" class="box">
     <h2>Navigation</h2>
     <ul class="sidebar-menu">
         <li class="selected"><a href="#/">Home</a></li>
     </ul>
 </div>
 
-<div data-ng-if="authentication.isLoggedIn()" class="box" >
+<div data-ng-if="!authentication.isLoggedIn()" class="box" >
     <p>To publish a new ad, please login.</p>
     <p><a href="#/login" class="btn btn-primary">Login</a></p>
     <p><a href="#/register" class="btn btn-primary">Register</a></p>

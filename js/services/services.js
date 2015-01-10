@@ -4,7 +4,7 @@
 
 app.factory('authenticationService', ['$resource', 'baseUrl', function($resource, baseUrl) {
     "use strict";
-
+    var user;
     var key = 'user';
 
     function userLogin(user) {
@@ -22,16 +22,23 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function isLoggedIn() {
-        return localStorage.getItem(key) == undefined;
+        var currentUser = angular.fromJson(localStorage.getItem(key));
+        console.log(currentUser);
+        if (currentUser) {
+            return currentUser.access_token !== undefined;
+        }
+
+        return false;
     }
 
     function isAdmin() {
-        //TODO
+        var userData = this.getCurrentUser();
+        //return this.isLoggedIn() &&
     }
 
     function getHeaders() {
         var headers = {};
-        var userData = getUserData();
+        var userData = this.getUserData();
         if(userData) {
             headers.Authorization = 'Bearer ' + userData.access_token;
         }
@@ -39,8 +46,10 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function saveUserData(data) {
+        var userData = data;
+        console.log(userData);
         //localStorageServiceProvider.set(key, data);
-        localStorage.setItem(key, data);
+        localStorage.setItem(key, angular.toJson(data));
     }
 
     function getUserData() {
@@ -67,8 +76,8 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             return resource.get();
         }
 
-        function getAdsWithPaging(pageSize, nextPage) {
-            var resource = $resource(baseUrl + 'ads?pagesize=' +  pageSize + '&startpage=' + nextPage);
+        function getAdsWithPaging(pagepaParams) {
+            var resource = $resource(baseUrl + 'ads?pagesize=' +  pagepaParams.pageSize + '&startpage=' + pagepaParams.currentPage);
             return resource.get();
         }
 

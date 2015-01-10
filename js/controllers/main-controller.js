@@ -21,14 +21,14 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 $scope.message.failure("There was an error!", "error", data.data);
             });
 
-        $scope.adsInfo = {
+        $scope.pageParams = {
             startPage: 1,
             currentPage: 1,
             pageSize: 5
         };
 
         $scope.pageChanged = function() {
-            adsService.getAdsWithPaging($scope.pageSize, $scope.currentPage)
+            adsService.getAdsWithPaging($scope.pageParams)
                 .$promise
                 .then(function(data) {
                     $scope.adsData = data;

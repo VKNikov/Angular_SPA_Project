@@ -22,7 +22,7 @@
     </ul>
     <div class="text-center">
         <pagination
-                page="adsInfo.startPage" total-items="adsData.numItems" items-per-page="adsInfo.pageSize" ng-model="adsInfo.currentPage"
+                page="pageParams.startPage" total-items="adsData.numItems" items-per-page="pageParams.pageSize" ng-model="pageParams.currentPage"
                 ng-change="pageChanged()" boundary-links="true" previous-text="<" next-text=">" first-text="<<"
                 last-text=">>" max-size="9">
         </pagination>
