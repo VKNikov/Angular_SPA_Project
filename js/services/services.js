@@ -52,7 +52,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         var headers = {};
         var userData = getUserData();
         if(userData) {
-            headers.Authorization = 'Bearer ' + userData.access_token;
+            headers['Authorization'] = 'Bearer ' + userData.access_token;
         }
         return headers;
     }
@@ -78,7 +78,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         saveCurrentUser: saveUserData
     }
 }])
-    .factory('adsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
+    .factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, $http, baseUrl) {
         "use strict";
 
         function getAllAds() {
@@ -101,11 +101,20 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             return resource.get(params);
         }
 
+        function getUserAds(headers) {
+            $http.defaults.headers.get = headers;
+            var resource = $resource(baseUrl + 'user/ads');
+
+            return resource.get();
+        }
+
         function editAd(adId, ad) {
+            var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
             return resource.update({ id: adId}, ad);
         }
 
         function getAdById(adId) {
+            var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
             return resource.query({id: adId});
         }
 
@@ -116,7 +125,8 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
         return {
             getAllAds: getAllAds,
             getAdsWithPaging: getAdsWithPaging,
-            getFilteredAds: getFilteredAds
+            getFilteredAds: getFilteredAds,
+            getUserAds: getUserAds
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {

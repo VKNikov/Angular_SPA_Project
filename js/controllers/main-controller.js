@@ -103,6 +103,7 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 .$promise
                 .then(function(data) {
                     $scope.message.success("Registration successful!", "success");
+                    $location.path('/login');
                 },
                 function(data) {
                     $scope.message.failure("Registration unsuccessful!", "error", data.data)
