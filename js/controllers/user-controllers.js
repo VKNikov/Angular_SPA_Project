@@ -19,55 +19,102 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'towns
                 $scope.message.failure("There was an error!", "error", data.data);
             });
 
-        $scope.pageParams = {
-            startPage: 1,
-            currentPage: 1,
-            pageSize: 5
-        };
-
-        $scope.pageChanged = function() {
-            adsService.getAdsWithPaging($scope.pageParams)
-                .$promise
-                .then(function(data) {
-                    $scope.adsData = data;
-                },
-                function(data) {
-                    $scope.message.failure("There was an error!", "error", data.data);
-                });
-        };
-
-        $scope.filterParams = {};
-        $scope.$on('categorySelectionChanged', function(event, categoryId) {
-            $scope.filterParams.categoryId = categoryId;
-            $scope.startPage = 1;
-            adsService.getFilteredAds($scope.filterParams)
-                .$promise
-                .then(function(data) {
-                    $scope.adsData = data;
-                },
-                function(data) {
-                    $scope.message.failure("There was an error!", "error", data.data);
-                });
-        });
-
-        $scope.$on('townSelectionChanged', function(event, townId) {
-            $scope.filterParams.townId = townId;
-            $scope.startPage = 1;
-            adsService.getFilteredAds($scope.filterParams)
-                .$promise
-                .then(function(data) {
-                    $scope.adsData = data;
-                },
-                function(data) {
-                    $scope.message.failure("There was an error!", "error", data.data);
-                });
-        })
+        //$scope.pageParams = {
+        //    startPage: 1,
+        //    currentPage: 1,
+        //    pageSize: 5
+        //};
+        //
+        //$scope.pageChanged = function() {
+        //    adsService.getAdsWithPaging($scope.pageParams)
+        //        .$promise
+        //        .then(function(data) {
+        //            $scope.adsData = data;
+        //        },
+        //        function(data) {
+        //            $scope.message.failure("There was an error!", "error", data.data);
+        //        });
+        //};
+        //
+        //$scope.filterParams = {};
+        //$scope.$on('categorySelectionChanged', function(event, categoryId) {
+        //    $scope.filterParams.categoryId = categoryId;
+        //    $scope.startPage = 1;
+        //    adsService.getFilteredAds($scope.filterParams)
+        //        .$promise
+        //        .then(function(data) {
+        //            $scope.adsData = data;
+        //        },
+        //        function(data) {
+        //            $scope.message.failure("There was an error!", "error", data.data);
+        //        });
+        //});
+        //
+        //$scope.$on('townSelectionChanged', function(event, townId) {
+        //    $scope.filterParams.townId = townId;
+        //    $scope.startPage = 1;
+        //    adsService.getFilteredAds($scope.filterParams)
+        //        .$promise
+        //        .then(function(data) {
+        //            $scope.adsData = data;
+        //        },
+        //        function(data) {
+        //            $scope.message.failure("There was an error!", "error", data.data);
+        //        });
+        //})
     }])
-    .controller('UserAddNewAdController', ['$scope', '$location', 'townsService', 'categoriesService', 'adsService', 'notifyService',
-        function($scope, $location, townsService, categoriesService, adsService, notifyService) {
+    .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
+        function($scope, $rootScope, $location, authenticationService, townsService, categoriesService, adsService, notifyService) {
             "use strict";
 
-    }])
+            $rootScope.pageTitle = '- Publish New Ad';
+            $scope.adData = {
+                townId: null,
+                categoryId: null
+            };
+            townsService.getAllTowns()
+                .$promise
+                .then(function(data) {
+                    $scope.towns = data;
+                });
+
+            categoriesService.getAllCategories()
+                .$promise
+                .then(function(data) {
+                    $scope.categories = data;
+                });
+
+            $scope.message = notifyService;
+            $scope.publishAd = function(adData) {
+                var headers = authenticationService.getHeaders();
+                console.log(headers);
+                adsService.postNewAd(adData, headers)
+                    .$promise
+                    .then(function(data) {
+                        $scope.message.success('The ad was added successfully and is pending approval! When approved by one of our admins, it will be added to the site.', 'success');
+                        $location.path('/user/userAds');
+                    },
+                    function(data) {
+                        $scope.message.failure("Couldn't add this ad!", 'error', data.data);
+                    })
+            };
+
+            $scope.fileSelected = function(fileInputField) {
+                delete $scope.adData.imageDataUrl;
+                var file = fileInputField.files[0];
+                if (file.type.match(/image\/.*/)) {
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        $scope.adData.imageDataUrl = reader.result;
+                        $(".image-box").html("<img src='" + reader.result + "'>");
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    $(".image-box").html("<p>File type not supported!</p>");
+                }
+            };
+
+        }])
     .controller('UserEditProfileController', ['$scope', '$location', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $location, townsService, categoriesService, adsService, notifyService) {
             "use strict";

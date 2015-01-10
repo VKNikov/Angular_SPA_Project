@@ -1,63 +1,64 @@
 <div class="centered-form box">
-    <form name="regForm" role="form">
-    <div class="text-center">
-        <h2>Register</h2>
-        <div class="form-group">
-            <label for="username">Username:
-                <br/>
-                <input type="text" id="username" class="form-control" data-ng-model="userData.username" required placeholder="Please type in your name..."/>
-            </label>
-        </div>
+    <form name="regForm">
+        <div class="text-center">
+            <h2>Register</h2>
+            <div class="form-group">
+                <label for="username">Username:
+                    <br/>
+                    <input type="text" id="username" class="form-control" data-ng-model="userData.username" required="" placeholder="Please type in your name..."/>
+                </label>
+            </div>
 
-        <div class="form-group">
-            <label for="password">Password:
-                <br/>
-                <input type="password" id="password" class="form-control" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
-            </label>
-        </div>
+            <div class="form-group">
+                <label for="password">Password:
+                    <br/>
+                    <input type="password" id="password" class="form-control" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
+                </label>
+            </div>
 
-        <div class="form-group">
-            <label for="confirmPassword">Confirm password:
-                <br/>
-                <input type="password" id="confirmPassword" class="form-control" data-ng-model="userData.confirmPassword" required  data-match="userData.password" placeholder="Confirm your password..." name="confirmPassword"/>
-            </label>
-        </div>
-        <div class="form-group" data-ng-show="regForm.confirmPassword.$error.match">Passwords do not match!</div>
-        <div class="form-group">
-            <label for="name">Name:
-                <br/>
-                <input type="text" id="name" class="form-control" data-ng-model="userData.name" required placeholder="Please type in your name..."/>
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="email">Email:
-                <br/>
-                <input type="email" id="email" class="form-control" data-ng-model="userData.email" required placeholder="Please type in your email..."/>
-            </label>
-        </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm password:
+                    <br/>
+                    <input type="password" id="confirmPassword" class="form-control" data-ng-model="userData.confirmPassword" required data-match="userData.password" placeholder="Confirm your password..." name="confirmPassword"/>
+                </label>
+            </div>
+            <div class="form-group" data-ng-show="regForm.confirmPassword.$error.match">Passwords do not match!</div>
 
-        <div class="form-group">
-            <label for="name">Phone:
-                <br/>
-                <input type="tel" id="phone" class="form-control" data-ng-model="userData.phone" required placeholder="Please type in your phone..."/>
-            </label>
+            <div class="form-group">
+                <label for="name">Name:
+                    <br/>
+                    <input type="text" id="name" class="form-control" data-ng-model="userData.name" required placeholder="Please type in your name..."/>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:
+                    <br/>
+                    <input type="email" id="email" class="form-control" data-ng-model="userData.email" required placeholder="Please type in your email..."/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Phone:
+                    <br/>
+                    <input type="tel" id="phone" class="form-control" data-ng-model="userData.phone" placeholder="Please type in your phone..."/>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="town">Town:
+                    <br/>
+                    <select id="town" class="form-control" data-ng-model="userData.townId">
+                        <option value="null">(None)</option>
+                        <option data-ng-repeat="town in towns"
+                                value="{{town.id}}">{{town.name}}</option>
+                    </select>
+                </label>
+            </div>
+
+
+            <button data-ng-disabled="regForm.$invalid" data-ng-click="register(userData)" class="btn btn-primary">Register</button>
+            <a href="#/login" class="link">Login here</a>
         </div>
-
-        <div class="form-group">
-            <label for="town">Town:
-                <br/>
-                <select id="town" class="form-control" data-ng-model="userData.townId">
-                    <option value="null">(None)</option>
-                    <option data-ng-repeat="town in towns"
-                            value="{{town.id}}">{{town.name}}</option>
-                </select>
-            </label>
-        </div>
-
-
-        <a data-ng-click="register(userData)" class="btn btn-primary">Register</a>
-        <a href="#/login" class="link">Login here</a>
-    </div>
 
 
         <!--<div class="row centered-form">-->

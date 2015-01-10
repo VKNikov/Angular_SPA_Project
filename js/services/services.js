@@ -2,7 +2,7 @@
  * Created by VKNikov on 6.1.2015 г..
  */
 
-app.factory('authenticationService', ['$resource', 'baseUrl', function($resource, baseUrl) {
+app.factory('authenticationService', ['$resource', '$location', 'baseUrl', function($resource, $location, baseUrl) {
     "use strict";
     var user;
     var key = 'user';
@@ -13,6 +13,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function userLogout() {
+        $location.path('/');
         localStorage.removeItem(key)
     }
 
@@ -31,21 +32,13 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function isAdmin() {
-        //var resource = $resource(baseUrl + 'admin/ads');
-        //var currentUser = angular.fromJson(localStorage.getItem(key));
-        //if (currentUser) {
-        //    var headers = this.getHeaders();
-        //    resource.get()
-        //        .$promise
-        //        .then(function() {
-        //            return true
-        //        }, function() {
-        //            return false
-        //        });
-        //    //return currentUser.access_token !== undefined;
-        //}
-        //
-        //return false;
+        var resource = $resource(baseUrl + 'admin/ads');
+        var currentUser = angular.fromJson(localStorage.getItem(key));
+        if (currentUser) {
+            return currentUser.isAdmin == "true";
+        }
+
+        return false;
     }
 
     function getHeaders() {
@@ -115,10 +108,14 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
 
         function getAdById(adId) {
             var resource = $resource(baseUrl + "ads:adId", {adId: '@id'}, {update: {method: 'PUT'}});
-            return resource.query({id: adId});
+            return resource.get({id: adId});
         }
 
-        function addAd(ad) {
+        function createAd(ad, headers) {
+            $http.defaults.headers.common = headers;
+            var resource = $resource(baseUrl + 'user/ads');
+            //return resource.addNewAd(ad, headers);
+
             return resource.save(ad);
         }
 
@@ -126,7 +123,8 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
             getAllAds: getAllAds,
             getAdsWithPaging: getAdsWithPaging,
             getFilteredAds: getFilteredAds,
-            getUserAds: getUserAds
+            getUserAds: getUserAds,
+            postNewAd: createAd
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {

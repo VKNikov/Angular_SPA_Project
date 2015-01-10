@@ -1,5 +1,4 @@
 <div class="box">
-    <h2>Home Screen</h2>
     <div class="text-center">
         <!--<img src="images/loading.gif" data-ng-hide="ready" alt="Waiting image"/>-->
         <p data-ng-hide="ready">Loading ads. Please wait...</p>
@@ -9,7 +8,6 @@
             <h1>{{ad.title}}</h1>
             <div><strong>Date:</strong> {{ad.date | date:'dd-MMM-yyyy'}}</div>
             <div data-ng-if='ad.imageDataUrl'>
-                <strong>Image:</strong>
                 <img class="ad-image" data-ng-src="{{ad.imageDataUrl}}" />
             </div>
             <div>
