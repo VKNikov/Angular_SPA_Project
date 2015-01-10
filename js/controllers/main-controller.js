@@ -75,7 +75,8 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 .$promise
                 .then(function(data) {
                     $scope.message.success("Login successful!", "success");
-                    $scope.authenticate.saveCurrentUser(data)
+                    $scope.authenticate.saveCurrentUser(data);
+                    $location.path('/');
                 },
                 function(data) {
                     $scope.message.failure("Login unsuccessful!", "error", data.data);

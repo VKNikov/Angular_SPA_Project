@@ -1,15 +1,21 @@
 <div class="box">
-    <h2>Login</h2>
-    <p>
-        <label for="username">Username:</label>
-        <input type="text" id="username" data-ng-model="userData.username" required placeholder="Please type in your username..."/>
-    </p>
-    <p>
-        <label for="password">Password:</label>
-        <input type="text" id="password" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
-    </p>
-    <p>
-        <a ng-click="login(userData)" class="button">Login</a>
-        <a href="#/register" class="link">Register</a>
-    <p>
+    <div class="text-center">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="username">Username:
+                <br/>
+            <input type="text" id="username" class="form-control" data-ng-model="userData.username" required placeholder="Please type in your username..."/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:
+                <br/>
+            <input type="text" id="password" class="form-control" data-ng-model="userData.password" required placeholder="Please type in your password..."/>
+            </label>
+        </div>
+        <div class="form-group">
+            <a data-ng-click="login(userData)" class="btn btn-primary">Login</a>
+            <a href="#/register" class="link">Register here</a>
+        <div>
+    </div>
 </div>

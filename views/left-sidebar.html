@@ -7,12 +7,28 @@ TODO: implement logic to show different navigation menu for:
 
 -->
 
-<!-- Navigation box for anonymous site visitors -->
-<div class="box">
+<div data-ng-if="!authentication.isLoggedIn()" class="box">
     <h2>Navigation</h2>
     <ul class="sidebar-menu">
         <li><a href="#/">Home</a></li>
-        <li><a href="#/login">Login</a></li>
-        <li><a href="#/register">Register</a></li>
+        <li><a href="#/user/ads">My Ads</a></li>
+        <li><a href="#/user/publishAd">Publish New Ad</a></li>
+        <li><a href="#/user/editProfile">Edit Profile</a></li>
+        <li><a data-ng-click="authentication.logout()">Logout</a></li>
     </ul>
 </div>
+
+<!-- Navigation box for anonymous site visitors -->
+<div data-ng-if="authentication.isLoggedIn()" class="box">
+    <h2>Navigation</h2>
+    <ul class="sidebar-menu">
+        <li class="selected"><a href="#/">Home</a></li>
+    </ul>
+</div>
+
+<div data-ng-if="authentication.isLoggedIn()" class="box" >
+    <p>To publish a new ad, please login.</p>
+    <p><a href="#/login" class="btn btn-primary">Login</a></p>
+    <p><a href="#/register" class="btn btn-primary">Register</a></p>
+</div>
+

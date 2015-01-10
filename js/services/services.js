@@ -13,7 +13,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function userLogout() {
-        //TODO
+        localStorage.removeItem(key)
     }
 
     function userRegister(user) {
@@ -22,7 +22,7 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function isLoggedIn() {
-        //TODO
+        return localStorage.getItem(key) == undefined;
     }
 
     function isAdmin() {
