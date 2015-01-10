@@ -20,7 +20,7 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'L
                 controller: 'RegisterController'
             })
             .when('/user/userAds', {
-                templateUrl: 'views/home.html',
+                templateUrl: 'views/user/userAds.html',
                 controller: 'UserAdsController'
             })
             .when('/user/publishAd', {

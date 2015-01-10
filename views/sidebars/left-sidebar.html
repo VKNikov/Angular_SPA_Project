@@ -41,3 +41,20 @@ TODO: implement logic to show different navigation menu for:
     <p><a href="#/towns">Towns</a></p>
 </div>
 
+<div data-ng-if="authentication.isLoggedIn()" class="box">
+    <h2>My Ads</h2>
+
+    <ul class="sidebar-menu">
+        <li><a class="special" data-ng-class="{selected: filterByAdsStatus == null}"
+               data-ng-click="filterByAdsClicked(null)" href="">All</a></li>
+        <li><a data-ng-click="filterByAdsClicked('Published')"
+               data-ng-class="{selected: filterByAdsStatus == 'Published'}" href="">Published</a></li>
+        <li><a data-ng-click="filterByAdsClicked('WaitingApproval')"
+               data-ng-class="{selected: filterByAdsStatus == 'WaitingApproval'}" href="">Waiting Approval</a></li>
+        <li><a data-ng-click="filterByAdsClicked('Inactive')"
+               data-ng-class="{selected: filterByAdsStatus == 'Inactive'}" href="">Inactive</a></li>
+        <li><a data-ng-click="filterByAdsClicked('Rejected')"
+               data-ng-class="{selected: filterByAdsStatus == 'Rejected'}" href="">Rejected</a></li>
+    </ul>
+</div>
+

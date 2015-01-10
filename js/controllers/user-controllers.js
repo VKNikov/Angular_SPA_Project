@@ -19,49 +19,36 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'towns
                 $scope.message.failure("There was an error!", "error", data.data);
             });
 
-        //$scope.pageParams = {
-        //    startPage: 1,
-        //    currentPage: 1,
-        //    pageSize: 5
-        //};
-        //
-        //$scope.pageChanged = function() {
-        //    adsService.getAdsWithPaging($scope.pageParams)
-        //        .$promise
-        //        .then(function(data) {
-        //            $scope.adsData = data;
-        //        },
-        //        function(data) {
-        //            $scope.message.failure("There was an error!", "error", data.data);
-        //        });
-        //};
-        //
-        //$scope.filterParams = {};
-        //$scope.$on('categorySelectionChanged', function(event, categoryId) {
-        //    $scope.filterParams.categoryId = categoryId;
-        //    $scope.startPage = 1;
-        //    adsService.getFilteredAds($scope.filterParams)
-        //        .$promise
-        //        .then(function(data) {
-        //            $scope.adsData = data;
-        //        },
-        //        function(data) {
-        //            $scope.message.failure("There was an error!", "error", data.data);
-        //        });
-        //});
-        //
-        //$scope.$on('townSelectionChanged', function(event, townId) {
-        //    $scope.filterParams.townId = townId;
-        //    $scope.startPage = 1;
-        //    adsService.getFilteredAds($scope.filterParams)
-        //        .$promise
-        //        .then(function(data) {
-        //            $scope.adsData = data;
-        //        },
-        //        function(data) {
-        //            $scope.message.failure("There was an error!", "error", data.data);
-        //        });
-        //})
+        $scope.pageParams = {
+            startPage: 1,
+            currentPage: 1,
+            pageSize: 5
+        };
+
+        $scope.pageChanged = function() {
+            adsService.getAdsWithPaging($scope.pageParams)
+                .$promise
+                .then(function(data) {
+                    $scope.adsData = data;
+                },
+                function(data) {
+                    $scope.message.failure("There was an error!", "error", data.data);
+                });
+        };
+
+        $scope.filterByAdsParams = {};
+        $scope.$on('filterByAdsChanged', function(event, status) {
+            $scope.filterByAdsParams.status = status;
+            $scope.pageParams.startPage = 1;
+            adsService.getUserAdsByStatus($scope.filterByAdsParams)
+                .$promise
+                .then(function(data) {
+                    $scope.adsData = data;
+                },
+                function(data) {
+                    $scope.message.failure("There was an error!", "error", data.data);
+                });
+        });
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $rootScope, $location, authenticationService, townsService, categoriesService, adsService, notifyService) {
@@ -113,7 +100,6 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'towns
                     $(".image-box").html("<p>File type not supported!</p>");
                 }
             };
-
         }])
     .controller('UserEditProfileController', ['$scope', '$location', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $location, townsService, categoriesService, adsService, notifyService) {

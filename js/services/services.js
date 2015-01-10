@@ -85,12 +85,11 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
         }
 
         function getFilteredAds(filterParams) {
+            var resource = $resource(baseUrl + 'ads?');
             var params = filterParams;
             if(!params) {
                 params = {}
             }
-
-            var resource = $resource(baseUrl + 'ads?');
             return resource.get(params);
         }
 
@@ -99,6 +98,16 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             var resource = $resource(baseUrl + 'user/ads');
 
             return resource.get();
+        }
+
+        function getUserAdsByStatus(status) {
+            var resource = $resource(baseUrl + 'user/ads?');
+            var adsStatus = status;
+            if(!adsStatus) {
+                adsStatus = {}
+            }
+
+            return resource.get(adsStatus);
         }
 
         function editAd(adId, ad) {
@@ -124,6 +133,7 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             getAdsWithPaging: getAdsWithPaging,
             getFilteredAds: getFilteredAds,
             getUserAds: getUserAds,
+            getUserAdsByStatus: getUserAdsByStatus,
             postNewAd: createAd
         }
     }])

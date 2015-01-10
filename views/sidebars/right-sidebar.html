@@ -1,0 +1,20 @@
+<div class="box">
+    <h2>Categories</h2>
+    <ul class="sidebar-menu">
+    <li><a class="special" data-ng-class="{selected: selectedCategoryId == null}" data-ng-click="categoryClicked(null)" href="">All</a></li>
+    <li data-ng-repeat="category in categories"><a data-ng-class="{selected: selectedCategoryId == category.id}" data-ng-click="categoryClicked(category.id)" href="">
+        {{category.name}}
+    </a></li>
+    </ul>
+
+</div>
+
+<div class="box">
+    <h2>Towns</h2>
+    <ul class="sidebar-menu">
+        <li><a class="special" data-ng-class="{selected: selectedTownId == null}" data-ng-click="townClicked(null)" href="">All</a></li>
+        <li data-ng-repeat="town in towns"><a  data-ng-class="{selected: selectedTownId == town.id}" data-ng-click="townClicked(town.id)" href="">
+            {{town.name}}
+        </a></li>
+    </ul>
+</div>

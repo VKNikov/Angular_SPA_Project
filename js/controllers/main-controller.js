@@ -5,7 +5,6 @@
 app.controller('MainController', ['$scope', 'authenticationService', function($scope, authenticationService) {
     "use strict";
 
-    //$scope.pageTitle = '';
     $scope.authentication = authenticationService;
     }])
     .controller('HomeController', ['$scope', '$rootScope', 'adsService', 'notifyService', function($scope, $rootScope, adsService, notifyService) {
@@ -145,4 +144,13 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 $scope.selectedTownId = townId;
                 $rootScope.$broadcast('townSelectionChanged', townId)
             }
-    }]);
+    }])
+    .controller('LeftSidebarController',  ['$scope', '$rootScope', '$location', 'authenticationService', 'categoriesService', 'townsService', 'notifyService',
+        function($scope, $rootScope, $location, authenticationService, categoriesService, townsService, notifyService) {
+            "use strict";
+
+            $scope.filterByAdsClicked = function(status) {
+                $scope.filterByAdsStatus = status;
+                $rootScope.$broadcast('filterByAdsChanged', status)
+            }
+        }]);
