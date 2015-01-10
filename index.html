@@ -9,13 +9,22 @@
 </head>
 <body>
 <header id="header" class="box">
-    <h1>Ads <span data-ng-if="pageTitle">{{pageTitle}}</span></h1>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <h1 class="col-md-8 text-center">Ads <span data-ng-if="pageTitle">{{pageTitle}}</span></h1>
+        <div class="col-md-2 text-center" data-ng-if="authentication.isLoggedIn()">
+            <span>{{authentication.getCurrentUser().username}}</span>
+            <a data-ng-click="authentication.logout()">Logout</a>
+        </div>
+    </div>
 </header>
+
 <div id="container">
     <div id="left-sidebar" class="col-md-2" data-ng-include="'views/left-sidebar.html'"></div>
     <div id="ads-window" class="col-md-8" data-ng-view=""></div>
     <div id="right-sidebar" class="col-md-2" data-ng-include="'views/right-sidebar.html'" data-ng-controller="RightSidebarController"></div>
 </div>
+
 <footer id="footer" class="box">© 2014 by Software University Foundation, No Rights Reserved</footer>
 <script src="../node_modules/jquery/dist/jquery.js"></script>
 <script src="../node_modules/noty/js/noty/packaged/jquery.noty.packaged.js"></script>
