@@ -23,7 +23,6 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
 
     function isLoggedIn() {
         var currentUser = angular.fromJson(localStorage.getItem(key));
-        console.log(currentUser);
         if (currentUser) {
             return currentUser.access_token !== undefined;
         }
@@ -32,13 +31,26 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function isAdmin() {
-        var userData = this.getCurrentUser();
-        //return this.isLoggedIn() &&
+        //var resource = $resource(baseUrl + 'admin/ads');
+        //var currentUser = angular.fromJson(localStorage.getItem(key));
+        //if (currentUser) {
+        //    var headers = this.getHeaders();
+        //    resource.get()
+        //        .$promise
+        //        .then(function() {
+        //            return true
+        //        }, function() {
+        //            return false
+        //        });
+        //    //return currentUser.access_token !== undefined;
+        //}
+        //
+        //return false;
     }
 
     function getHeaders() {
         var headers = {};
-        var userData = this.getUserData();
+        var userData = getUserData();
         if(userData) {
             headers.Authorization = 'Bearer ' + userData.access_token;
         }
@@ -46,8 +58,6 @@ app.factory('authenticationService', ['$resource', 'baseUrl', function($resource
     }
 
     function saveUserData(data) {
-        var userData = data;
-        console.log(userData);
         //localStorageServiceProvider.set(key, data);
         localStorage.setItem(key, angular.toJson(data));
     }

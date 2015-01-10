@@ -5,11 +5,13 @@
 app.controller('MainController', ['$scope', 'authenticationService', function($scope, authenticationService) {
     "use strict";
 
+    //$scope.pageTitle = '';
     $scope.authentication = authenticationService;
     }])
     .controller('HomeController', ['$scope', '$rootScope', 'adsService', 'notifyService', function($scope, $rootScope, adsService, notifyService) {
         "use strict";
 
+        $rootScope.pageTitle = '- Home';
         $scope.message = notifyService;
         adsService.getAllAds()
             .$promise
@@ -65,9 +67,10 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 });
         })
     }])
-    .controller('LoginController', ['$scope', '$location', 'authenticationService', 'notifyService',  function($scope, $location, authenticationService, notifyService) {
+    .controller('LoginController', ['$scope', '$rootScope', '$location', 'authenticationService', 'notifyService',  function($scope, $rootScope, $location, authenticationService, notifyService) {
         "use strict";
 
+        $rootScope.pageTitle = '- Login';
         $scope.message = notifyService;
         $scope.authenticate = authenticationService;
         $scope.login = function(userData) {
@@ -83,9 +86,10 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
                 });
         }
     }])
-    .controller('RegisterController', ['$scope', '$location', 'authenticationService', 'townsService', 'notifyService', function($scope, $location, authenticationService, townsService, notifyService) {
+    .controller('RegisterController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'notifyService', function($scope, $rootScope, $location, authenticationService, townsService, notifyService) {
         "use strict";
 
+        $rootScope.pageTitle = '- Registration';
         townsService.getAllTowns()
             .$promise
             .then(function(data) {
