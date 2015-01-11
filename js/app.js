@@ -31,7 +31,7 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'L
                 templateUrl: 'view/user/editProfile.html',
                 controller: 'UserEditProfileController'
             })
-            .when('/user/deleteAd', {
+            .when('/user/userAds/deleteAd', {
                 templateUrl: 'views/user/deleteForm.html',
                 controller: 'UserAdsController'
             })

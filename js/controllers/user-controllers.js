@@ -81,7 +81,7 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
 
         $scope.deleteAd = function(ad) {
             $scope.currentAd = ad;
-            $location.path('/user/deleteAd');
+            $location.path('/user/userAds/deleteAd');
         }
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
