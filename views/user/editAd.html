@@ -29,7 +29,7 @@
                 <br/>
                 <select id="category" class="form-control"  data-ng-model="currentAd.categoryId">
                     <option value="null">(None)</option>
-                    <option data-ng-repeat="c in editAdCategories" value="{{c.id}}">{{c.name}}</option>
+                    <option data-ng-repeat="c in categories" value="{{c.id}}">{{c.name}}</option>
                 </select>
             </label>
         </div>
@@ -39,7 +39,7 @@
                 <br/>
                 <select id="town" class="form-control" data-ng-model="currentAd.townId">
                     <option value="null">(None)</option>
-                    <option data-ng-repeat="town in editAdTowns"
+                    <option data-ng-repeat="town in towns"
                             value="{{town.id}}">{{town.name}}</option>
                 </select>
             </label>
@@ -47,7 +47,7 @@
 
         <p>
             <a data-ng-click="editAd(currentAd)" class="btn btn-primary">Edit</a>
-            <a href="/user/userAds" class="btn btn-primary">Cancel</a>
+            <a href="#/user/userAds" class="btn btn-primary">Cancel</a>
         <p>
     </form>
 

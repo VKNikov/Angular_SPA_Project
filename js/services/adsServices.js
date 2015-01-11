@@ -106,12 +106,8 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
 
         var resource = $resource(baseUrl + 'categories');
 
-        function getAllCategories(condition) {
-            if(condition == 'true') {
-                return resource.query();
-            }
-
-            return resource.get();
+        function getAllCategories() {
+            return resource.query();
         }
 
         return {
@@ -123,12 +119,8 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
 
         var resource = $resource(baseUrl + 'towns');
 
-        function getAllTowns(condition) {
-            if(condition == 'true') {
-                return resource.query();
-            }
-
-            return resource.get();
+        function getAllTowns() {
+            return resource.query();
         }
 
         return {

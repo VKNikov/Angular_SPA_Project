@@ -85,7 +85,6 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
         };
 
         $scope.editAd = function(ad) {
-            console.log(ad);
             $rootScope.currentAd = ad;
             $location.path('/users/userAds/editAd');
         };
@@ -100,22 +99,21 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                 townId: null,
                 categoryId: null
             };
-            townsService.getAllTowns('true')
+            townsService.getAllTowns()
                 .$promise
                 .then(function(data) {
-                    $scope.newAdTowns = data;
+                    $rootScope.towns = data;
                 });
 
-            categoriesService.getAllCategories('true')
+            categoriesService.getAllCategories()
                 .$promise
                 .then(function(data) {
-                    $scope.newAdCategories = data;
+                    $rootScope.categories = data;
                 });
 
             $scope.message = notifyService;
             $scope.publishAd = function(adData) {
                 var headers = authenticationService.getHeaders();
-                console.log(headers);
                 adsService.postNewAd(adData, headers)
                     .$promise
                     .then(function(data) {
@@ -154,10 +152,10 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                 });
 
             $rootScope.pageTitle = '- Edit User Profile';
-            townsService.getAllTowns('true')
+            townsService.getAllTowns()
                 .$promise
                 .then(function(data) {
-                    $rootScope.editProfileTowns = data;
+                    $rootScope.towns = data;
                 });
 
             $scope.updateProfile = function(userData) {
@@ -211,16 +209,16 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
             $scope.editedAd = {
                 changeimage: false
             };
-            townsService.getAllTowns('true')
+            townsService.getAllTowns()
                 .$promise
                 .then(function(data) {
-                    $rootScope.editAdTowns = data;
+                    $rootScope.towns = data;
                 });
 
-            categoriesService.getAllCategories('true')
+            categoriesService.getAllCategories()
                 .$promise
                 .then(function(data) {
-                    $rootScope.editAdCategories = data;
+                    $rootScope.categories = data;
                 });
 
             $scope.message = notifyService;
