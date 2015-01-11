@@ -89,7 +89,7 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
         "use strict";
 
         $rootScope.pageTitle = '- Registration';
-        townsService.getAllTowns()
+        townsService.getAllTowns(true)
             .$promise
             .then(function(data) {
                 $scope.towns = data;

@@ -1,4 +1,4 @@
-<div class="box">
+<div class="box" data-ng-if="personalAds == null" data-ng-hide="myAds">
     <h2>Categories</h2>
     <ul class="sidebar-menu">
     <li><a class="special" data-ng-class="{selected: selectedCategoryId == null}" data-ng-click="categoryClicked(null)" href="">All</a></li>
@@ -9,7 +9,7 @@
 
 </div>
 
-<div class="box">
+<div class="box" data-ng-if="personalAds == null" data-ng-hide="myAds">
     <h2>Towns</h2>
     <ul class="sidebar-menu">
         <li><a class="special" data-ng-class="{selected: selectedTownId == null}" data-ng-click="townClicked(null)" href="">All</a></li>

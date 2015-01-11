@@ -7,8 +7,21 @@
         <li data-ng-repeat="ad in adsData.ads" class="box">
             <h1>{{ad.title}}</h1>
             <div><strong>Date:</strong> {{ad.date | date:'dd-MMM-yyyy'}}</div>
-            <div data-ng-if='ad.imageDataUrl'>
-                <img class="ad-image" data-ng-src="{{ad.imageDataUrl}}" />
+            <div class="row">
+                <div data-ng-if='ad.imageDataUrl' class="col-md-10">
+                    <img class="ad-image" data-ng-src="{{ad.imageDataUrl}}" />
+                </div>
+                <div class="col-md-2">
+                    <p>Status:</p>
+                    <p >{{ad.status}}</p>
+                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'WaitingApproval' || filterByAdsStatus == 'Published'" data-ng-click="deactivateAd(ad.id)">Deactivate</button>
+                    <br/>
+                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="editAd(ad.id)">Edit</button>
+                    <br/>
+                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="publishAgain(ad.id)">Publish Again</button>
+                    <br/>
+                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="deleteAd(ad.id)">Delete</button>
+                </div>
             </div>
             <div>
                 <p>Text: {{ad.text}}</p>

@@ -120,6 +120,20 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             return resource.get({id: adId});
         }
 
+        function deactivateAd(adId, headers) {
+            $http.defaults.headers.common = headers;
+            var resource = $resource(baseUrl + 'user/ads/deactivate/' + adId, null, {update: {method: 'PUT'}});
+
+            return resource.update();
+        }
+
+        function publishAgain(adId, headers) {
+            $http.defaults.headers.common = headers;
+            var resource = $resource(baseUrl + 'user/ads/publishagain/' + adId, null, {update: {method: 'PUT'}});
+
+            return resource.update();
+        }
+
         function createAd(ad, headers) {
             $http.defaults.headers.common = headers;
             var resource = $resource(baseUrl + 'user/ads');
@@ -134,7 +148,8 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             getFilteredAds: getFilteredAds,
             getUserAds: getUserAds,
             getUserAdsByStatus: getUserAdsByStatus,
-            postNewAd: createAd
+            postNewAd: createAd,
+            deactivateAd: deactivateAd
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {
@@ -142,7 +157,11 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
 
         var resource = $resource(baseUrl + 'categories');
 
-        function getAllCategories() {
+        function getAllCategories(condition) {
+            if(condition == 'true') {
+                return resource.get();
+            }
+
             return resource.query();
         }
 
@@ -155,7 +174,11 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
 
         var resource = $resource(baseUrl + 'towns');
 
-        function getAllTowns () {
+        function getAllTowns (condition) {
+            if(condition == 'true') {
+                return resource.get();
+            }
+
             return resource.query();
         }
 

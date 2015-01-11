@@ -2,8 +2,8 @@
  * Created by VKNikov on 10.1.2015 г..
  */
 
-app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'townsService', 'categoriesService', 'adsService', 'notifyService', 'authenticationService',
-    function($scope, $rootScope, $location, townsService, categoriesService, adsService, notifyService, authenticationService) {
+app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$route', 'townsService', 'categoriesService', 'adsService', 'notifyService', 'authenticationService',
+    function($scope, $rootScope, $location, $route, townsService, categoriesService, adsService, notifyService, authenticationService) {
         "use strict";
 
         $rootScope.pageTitle = '- MyAds';
@@ -14,6 +14,7 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'towns
             .then(function (data) {
                 $scope.ready = true;
                 $scope.adsData = data;
+                $rootScope.myAds = true;
             },
             function (data) {
                 $scope.message.failure("There was an error!", "error", data.data);
@@ -43,29 +44,58 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', 'towns
             adsService.getUserAdsByStatus($scope.filterByAdsParams)
                 .$promise
                 .then(function(data) {
+                    $scope.filterByAdsStatus = status;
                     $scope.adsData = data;
+                    $scope.personalAds = null;
                 },
                 function(data) {
                     $scope.message.failure("There was an error!", "error", data.data);
                 });
         });
+
+        $scope.deactivateAd = function(adId) {
+            adsService.deactivateAd(adId, $scope.headers)
+                .$promise
+                .then(function(data) {
+                    $scope.message.success('The ad was successfully deactivated!', 'success');
+                    $scope.myAds = null;
+                    $route.reload();
+                },
+                function(data) {
+                    $scope.message.failure('Operation unsuccessful!', 'error', data.data)
+                })
+        };
+
+        $scope.publishAgain = function(adId) {
+            adsService.deactivateAd(adId, $scope.headers)
+                .$promise
+                .then(function(data) {
+                    $scope.message.success('The ad was successfully deactivated!', 'success');
+                    $scope.myAds = null;
+                    $route.reload();
+                },
+                function(data) {
+                    $scope.message.failure('Operation unsuccessful!', 'error', data.data)
+                })
+        }
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $rootScope, $location, authenticationService, townsService, categoriesService, adsService, notifyService) {
             "use strict";
 
+            $rootScope.myAds = false;
             $rootScope.pageTitle = '- Publish New Ad';
             $scope.adData = {
                 townId: null,
                 categoryId: null
             };
-            townsService.getAllTowns()
+            townsService.getAllTowns(true)
                 .$promise
                 .then(function(data) {
                     $scope.towns = data;
                 });
 
-            categoriesService.getAllCategories()
+            categoriesService.getAllCategories(true)
                 .$promise
                 .then(function(data) {
                     $scope.categories = data;
