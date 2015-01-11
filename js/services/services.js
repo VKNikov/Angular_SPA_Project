@@ -79,8 +79,8 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             return resource.get();
         }
 
-        function getAdsWithPaging(pagepaParams) {
-            var resource = $resource(baseUrl + 'ads?pagesize=' +  pagepaParams.pageSize + '&startpage=' + pagepaParams.currentPage);
+        function getAdsWithPaging(pageParams) {
+            var resource = $resource(baseUrl + 'ads?pagesize=' +  pageParams.pageSize + '&startpage=' + pageParams.currentPage);
             return resource.get();
         }
 
@@ -97,6 +97,11 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             $http.defaults.headers.get = headers;
             var resource = $resource(baseUrl + 'user/ads');
 
+            return resource.get();
+        }
+
+        function getUserAdsWIthPaging(pageParams) {
+            var resource = $resource(baseUrl + 'user/ads?pagesize=' +  pageParams.pageSize + '&startpage=' + pageParams.currentPage);
             return resource.get();
         }
 
@@ -149,7 +154,9 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             getUserAds: getUserAds,
             getUserAdsByStatus: getUserAdsByStatus,
             postNewAd: createAd,
-            deactivateAd: deactivateAd
+            deactivateAd: deactivateAd,
+            getUserAdsWithPaging: getUserAdsWIthPaging,
+            publishAgain: publishAgain
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {

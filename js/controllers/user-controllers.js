@@ -23,11 +23,11 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
         $scope.pageParams = {
             startPage: 1,
             currentPage: 1,
-            pageSize: 5
+            pageSize: 2
         };
 
         $scope.pageChanged = function() {
-            adsService.getAdsWithPaging($scope.pageParams)
+            adsService.getUserAdsWithPaging($scope.pageParams)
                 .$promise
                 .then(function(data) {
                     $scope.adsData = data;
@@ -67,16 +67,21 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
         };
 
         $scope.publishAgain = function(adId) {
-            adsService.deactivateAd(adId, $scope.headers)
+            adsService.publishAgain(adId, $scope.headers)
                 .$promise
                 .then(function(data) {
-                    $scope.message.success('The ad was successfully deactivated!', 'success');
+                    $scope.message.success('The ad is published again and is awaiting approval!', 'success');
                     $scope.myAds = null;
                     $route.reload();
                 },
                 function(data) {
                     $scope.message.failure('Operation unsuccessful!', 'error', data.data)
                 })
+        };
+
+        $scope.deleteAd = function(ad) {
+            $scope.currentAd = ad;
+            $location.path('/user/deleteAd');
         }
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',

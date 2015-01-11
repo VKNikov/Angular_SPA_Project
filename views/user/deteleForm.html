@@ -1,0 +1,20 @@
+<div class="centered-form box">
+    <h2>Confirm Deleting Ad</h2>
+
+    <ul class="ads">
+        <li class="box">
+            <h2>{{ad.title}}</h2>
+            <div><strong>Date:</strong> {{ad.date | date:'dd-MMM-yyyy'}}</div>
+            <div data-ng-if='ad.imageDataUrl'>
+                <img class="ad-image" data-ng-src="{{ad.imageDataUrl}}" />
+            </div>
+            <div>
+                <p>Text: {{ad.text}}</p>
+                <p>Category:  <span>{{ad.category}}</span></p>
+                <p>Town: <span>{{ad.town}}</span></p>
+            </div>
+        </li>
+    </ul>
+    <a data-ng-click="publishAd(adData)" class="btn btn-primary">Delete</a>
+    <a href="#/user/userAds" class="btn btn-primary">Cancel</a>
+</div>
