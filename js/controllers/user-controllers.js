@@ -95,16 +95,16 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                 townId: null,
                 categoryId: null
             };
-            townsService.getAllTowns(true)
+            townsService.getAllTowns('true')
                 .$promise
                 .then(function(data) {
-                    $scope.towns = data;
+                    $scope.newAdTowns = data;
                 });
 
-            categoriesService.getAllCategories(true)
+            categoriesService.getAllCategories('true')
                 .$promise
                 .then(function(data) {
-                    $scope.categories = data;
+                    $scope.newAdCategories = data;
                 });
 
             $scope.message = notifyService;
@@ -137,16 +137,46 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                 }
             };
         }])
-    .controller('UserEditProfileController', ['$scope', '$location', '$rootScope', 'townsService', 'categoriesService', 'adsService', 'notifyService',
-        function($scope, $location, $rootScope, townsService, categoriesService, adsService, notifyService) {
+    .controller('UserEditProfileController', ['$scope', '$location', '$rootScope', 'townsService', 'categoriesService', 'adsService', 'notifyService', 'authenticationService',
+        function($scope, $location, $rootScope, townsService, categoriesService, adsService, notifyService, authenticationService) {
             "use strict";
 
-            $rootScope.pageTitle = '- Edit User Profile';
-            townsService.getAllTowns(true)
+            $scope.message = notifyService;
+            authenticationService.getUserProfile()
                 .$promise
                 .then(function(data) {
-                    $rootScope.towns = data;
+                    $scope.userData = data;
                 });
+
+            $rootScope.pageTitle = '- Edit User Profile';
+            townsService.getAllTowns('true')
+                .$promise
+                .then(function(data) {
+                    $rootScope.editProfileTowns = data;
+                });
+
+            $scope.updateProfile = function(userData) {
+                authenticationService.editUserProfile(userData)
+                    .$promise
+                    .then(function(data) {
+                        $scope.message.success('Profile updated successfully!', 'success');
+                        $location.path('user/userAds');
+                    },
+                    function(data) {
+                        $scope.message.failure('Operation unsuccessful', 'error', data.data)
+                    })
+            };
+
+            $scope.changePass = function(passData) {
+                authenticationService.changePassword(passData)
+                    .$promise
+                    .then(function(data) {
+                        $scope.message.success('Password changed successfully!', 'success');
+                    },
+                    function(data) {
+                        $scope.message.failure('Could not change the password!', 'error', data.data);
+                    })
+            }
     }])
     .controller('UserDeleteAdController', ['$scope', '$rootScope', '$location', 'adsService', 'notifyService', 'authenticationService',
         function($scope,$rootScope, $location, adsService, notifyService, authenticationService) {

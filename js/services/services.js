@@ -2,7 +2,7 @@
  * Created by VKNikov on 6.1.2015 г..
  */
 
-app.factory('authenticationService', ['$resource', '$location', 'baseUrl', function($resource, $location, baseUrl) {
+app.factory('authenticationService', ['$resource', '$location', '$http', 'baseUrl', function($resource, $location, $http, baseUrl) {
     "use strict";
     var user;
     var key = 'user';
@@ -47,7 +47,29 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
         if(userData) {
             headers['Authorization'] = 'Bearer ' + userData.access_token;
         }
+
         return headers;
+    }
+
+    function getUserProfile() {
+        $http.defaults.headers.get = this.getHeaders();
+        var resource = $resource(baseUrl + "user/profile");
+        return resource.get();
+    }
+
+    function editUserProfile(userData) {
+        $http.defaults.headers.common = this.getHeaders();
+        var resource = $resource(baseUrl + "user/profile", null, {update: {method: 'PUT'}});
+
+        return resource.update(userData);
+    }
+
+    function changePassword(passData) {
+        console.log(passData);
+        $http.defaults.headers.common = this.getHeaders();
+        var resource = $resource(baseUrl + "user/changepassword", null, {update: {method: 'PUT'}});
+
+        return resource.update(passData);
     }
 
     function saveUserData(data) {
@@ -68,7 +90,10 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
         isAdmin: isAdmin,
         getHeaders: getHeaders,
         getCurrentUser: getUserData,
-        saveCurrentUser: saveUserData
+        saveCurrentUser: saveUserData,
+        getUserProfile: getUserProfile,
+        editUserProfile: editUserProfile,
+        changePassword: changePassword
     }
 }])
     .factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, $http, baseUrl) {
@@ -174,10 +199,10 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
 
         function getAllCategories(condition) {
             if(condition == 'true') {
-                return resource.get();
+                return resource.query();
             }
 
-            return resource.query();
+            return resource.get();
         }
 
         return {
@@ -189,12 +214,12 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
 
         var resource = $resource(baseUrl + 'towns');
 
-        function getAllTowns (condition) {
+        function getAllTowns(condition) {
             if(condition == 'true') {
-                return resource.get();
+                return resource.query();
             }
 
-            return resource.query();
+            return resource.get();
         }
 
         return {

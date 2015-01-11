@@ -28,7 +28,7 @@
                 <br/>
                 <select id="category" class="form-control"  data-ng-model="adData.categoryId">
                     <option value="null">(None)</option>
-                    <option data-ng-repeat="c in categories" value="{{c.id}}">{{c.name}}</option>
+                    <option data-ng-repeat="c in newAdCategories" value="{{c.id}}">{{c.name}}</option>
                 </select>
             </label>
         </div>
@@ -38,7 +38,7 @@
                 <br/>
                 <select id="town" class="form-control" data-ng-model="adData.townId">
                     <option value="null">(None)</option>
-                    <option data-ng-repeat="town in towns"
+                    <option data-ng-repeat="town in newAdTowns"
                             value="{{town.id}}">{{town.name}}</option>
                 </select>
             </label>

@@ -112,21 +112,21 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
     }])
     .controller('RightSidebarController', ['$scope', '$rootScope', '$location', 'authenticationService', 'categoriesService', 'townsService', 'notifyService',
         function($scope, $rootScope, $location, authenticationService, categoriesService, townsService, notifyService) {
-            categoriesService.getAllCategories()
+            categoriesService.getAllCategories('true')
                 .$promise
                 .then(function(data) {
                     "use strict";
-                    $scope.categories = data;
+                    $scope.rightCategories = data;
                 },
                 function(data) {
                 "use strict";
                 notifyService.failure('Cannot load categories!', 'error', data)
             });
-            townsService.getAllTowns()
+            townsService.getAllTowns('true')
                 .$promise
                 .then(function(data) {
                     "use strict";
-                    $scope.towns = data;
+                    $scope.rightTowns = data;
                 },
                 function(data) {
                     "use strict";
