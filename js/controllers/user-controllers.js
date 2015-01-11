@@ -80,8 +80,20 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
         };
 
         $scope.deleteAd = function(ad) {
-            $scope.currentAd = ad;
+            $rootScope.currentAd = ad;
             $location.path('/user/userAds/deleteAd');
+        };
+
+        $rootScope.confirmDelete = function(adId) {
+            adsService.deleteAd(adId, $scope.headers)
+                .$promise
+                .then(function(data) {
+                    $scope.message.success('Ad successfully deleted!', 'success');
+                    $location.path('/user/userAds');
+                },
+                function(data) {
+                    $scope.message.failure('Could not delete this ad!', 'error', data.data)
+                })
         }
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',

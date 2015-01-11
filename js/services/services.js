@@ -147,6 +147,13 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             return resource.save(ad);
         }
 
+        function deleteAdById(adId, headers) {
+            $http.defaults.headers.common = headers;
+            var resource = $resource(baseUrl + 'user/ads/' + adId);
+
+            return resource.delete();
+        }
+
         return {
             getAllAds: getAllAds,
             getAdsWithPaging: getAdsWithPaging,
@@ -156,7 +163,8 @@ app.factory('authenticationService', ['$resource', '$location', 'baseUrl', funct
             postNewAd: createAd,
             deactivateAd: deactivateAd,
             getUserAdsWithPaging: getUserAdsWIthPaging,
-            publishAgain: publishAgain
+            publishAgain: publishAgain,
+            deleteAd: deleteAdById
         }
     }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {

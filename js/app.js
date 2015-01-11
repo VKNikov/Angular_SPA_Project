@@ -32,7 +32,7 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'L
                 controller: 'UserEditProfileController'
             })
             .when('/user/userAds/deleteAd', {
-                templateUrl: 'views/user/deleteForm.html',
+                templateUrl: 'views/user/deleteAd.html',
                 controller: 'UserAdsController'
             })
             .otherwise({redirectTo: '/'});
