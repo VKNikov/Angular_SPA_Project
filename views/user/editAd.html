@@ -1,0 +1,54 @@
+<div class="centered-form box">
+    <h2>Edit Ad</h2>
+
+    <form name="newAdForm" role="form">
+        <div class="form-group">
+            <label for="title">Title:
+                <input type="text" id="title" class="form-control" data-ng-model="currentAd.title" required />
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="adText">Text:
+                <input type="adText" id="adText" class="form-control" data-ng-model="currentAd.text" required />
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="image">Image:</label>
+            <input type="file" id="image"
+                   onchange="angular.element(this).scope().fileSelected(this)" />
+            <div class="image-box">
+                <p>Image Preview</p>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label for="category">Category:
+                <br/>
+                <select id="category" class="form-control"  data-ng-model="currentAd.categoryId">
+                    <option value="null">(None)</option>
+                    <option data-ng-repeat="c in editAdCategories" value="{{c.id}}">{{c.name}}</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="town">Town:
+                <br/>
+                <select id="town" class="form-control" data-ng-model="currentAd.townId">
+                    <option value="null">(None)</option>
+                    <option data-ng-repeat="town in editAdTowns"
+                            value="{{town.id}}">{{town.name}}</option>
+                </select>
+            </label>
+        </div>
+
+        <p>
+            <a data-ng-click="editAd(currentAd)" class="btn btn-primary">Edit</a>
+            <a href="/user/userAds" class="btn btn-primary">Cancel</a>
+        <p>
+    </form>
+
+</div>

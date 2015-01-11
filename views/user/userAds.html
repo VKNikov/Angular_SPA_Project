@@ -16,7 +16,7 @@
                     <p >{{ad.status}}</p>
                     <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'WaitingApproval' || filterByAdsStatus == 'Published'" data-ng-click="deactivateAd(ad.id)">Deactivate</button>
                     <br/>
-                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="editAd(ad.id)">Edit</button>
+                    <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="editAd(ad)">Edit</button>
                     <br/>
                     <button class="btn btn-primary" data-ng-show="filterByAdsStatus == 'Inactive'" data-ng-click="publishAgain(ad.id)">Publish Again</button>
                     <br/>

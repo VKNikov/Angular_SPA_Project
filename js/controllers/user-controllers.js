@@ -84,6 +84,11 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
             $location.path('/user/userAds/deleteAd');
         };
 
+        $scope.editAd = function(ad) {
+            console.log(ad);
+            $rootScope.currentAd = ad;
+            $location.path('/users/userAds/editAd');
+        };
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $rootScope, $location, authenticationService, townsService, categoriesService, adsService, notifyService) {
@@ -183,6 +188,7 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
             "use strict";
 
             $rootScope.pageTitle = '- Delete Ad';
+            $rootScope.myAds = null;
             $scope.headers = authenticationService.getHeaders();
             $scope.message = notifyService;
             $scope.confirmDelete = function(adId) {
@@ -194,6 +200,39 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                     },
                     function(data) {
                         $scope.message.failure('Could not delete this ad!', 'error', data.data)
+                    })
+            }
+    }])
+    .controller('UserEditAdController', ['$scope', '$rootScope', '$location', 'adsService', 'notifyService', 'authenticationService', 'townsService', 'categoriesService',
+        function($scope,$rootScope, $location, adsService, notifyService, authenticationService, townsService, categoriesService) {
+            "use strict";
+
+            $rootScope.pageTitle = '- Edit Ad';
+            $scope.editedAd = {
+                changeimage: false
+            };
+            townsService.getAllTowns('true')
+                .$promise
+                .then(function(data) {
+                    $rootScope.editAdTowns = data;
+                });
+
+            categoriesService.getAllCategories('true')
+                .$promise
+                .then(function(data) {
+                    $rootScope.editAdCategories = data;
+                });
+
+            $scope.message = notifyService;
+            $scope.headers = authenticationService.getHeaders();
+            $scope.editAd = function(editedAd) {
+                adsService.editAd(editedAd, $scope.headers)
+                    .$promise
+                    .then(function(data) {
+                        $scope.message.success('Ad edited successfully!', 'success')
+                    },
+                    function(data) {
+                        $scope.message.failure('Ad edit failed!', 'error', data.data)
                     })
             }
     }]);

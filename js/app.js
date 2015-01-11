@@ -35,6 +35,10 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'L
                 templateUrl: 'views/user/deleteAd.html',
                 controller: 'UserDeleteAdController'
             })
+            .when('/users/userAds/editAd', {
+                templateUrl: 'views/user/editAd.html',
+                controller: 'UserEditAdController'
+            })
             .otherwise({redirectTo: '/'});
 
         //localStorageServiceProvider.setStorageType('localStorage');

@@ -11,6 +11,7 @@ app.controller('MainController', ['$scope', 'authenticationService', function($s
         "use strict";
 
         $rootScope.pageTitle = '- Home';
+        $scope.myAds = null;
         $scope.message = notifyService;
         adsService.getAllAds()
             .$promise
