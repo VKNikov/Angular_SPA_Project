@@ -84,17 +84,6 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
             $location.path('/user/userAds/deleteAd');
         };
 
-        $rootScope.confirmDelete = function(adId) {
-            adsService.deleteAd(adId, $scope.headers)
-                .$promise
-                .then(function(data) {
-                    $scope.message.success('Ad successfully deleted!', 'success');
-                    $location.path('/user/userAds');
-                },
-                function(data) {
-                    $scope.message.failure('Could not delete this ad!', 'error', data.data)
-                })
-        }
     }])
     .controller('UserAddNewAdController', ['$scope', '$rootScope', '$location', 'authenticationService', 'townsService', 'categoriesService', 'adsService', 'notifyService',
         function($scope, $rootScope, $location, authenticationService, townsService, categoriesService, adsService, notifyService) {
@@ -148,8 +137,33 @@ app.controller('UserAdsController', ['$scope', '$rootScope', '$location', '$rout
                 }
             };
         }])
-    .controller('UserEditProfileController', ['$scope', '$location', 'townsService', 'categoriesService', 'adsService', 'notifyService',
-        function($scope, $location, townsService, categoriesService, adsService, notifyService) {
+    .controller('UserEditProfileController', ['$scope', '$location', '$rootScope', 'townsService', 'categoriesService', 'adsService', 'notifyService',
+        function($scope, $location, $rootScope, townsService, categoriesService, adsService, notifyService) {
             "use strict";
 
+            $rootScope.pageTitle = '- Edit User Profile';
+            townsService.getAllTowns(true)
+                .$promise
+                .then(function(data) {
+                    $rootScope.towns = data;
+                });
+    }])
+    .controller('UserDeleteAdController', ['$scope', '$rootScope', '$location', 'adsService', 'notifyService', 'authenticationService',
+        function($scope,$rootScope, $location, adsService, notifyService, authenticationService) {
+            "use strict";
+
+            $rootScope.pageTitle = '- Delete Ad';
+            $scope.headers = authenticationService.getHeaders();
+            $scope.message = notifyService;
+            $scope.confirmDelete = function(adId) {
+                adsService.deleteAd(adId, $scope.headers)
+                    .$promise
+                    .then(function(data) {
+                        $scope.message.success('Ad successfully deleted!', 'success');
+                        $location.path('/user/userAds');
+                    },
+                    function(data) {
+                        $scope.message.failure('Could not delete this ad!', 'error', data.data)
+                    })
+            }
     }]);

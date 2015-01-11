@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div class="centered-form box">
+    <div class="col-md-6">
+        <h2>Edit Profile</h2>
 
-</body>
-</html>
+        <div class="form-group">
+            <label for="name">Name:
+                <br/>
+                <input type="text" id="name" class="form-control" data-ng-model="userData.name" required placeholder="Please type in your name..."/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:
+                <br/>
+                <input type="email" id="email" class="form-control" data-ng-model="userData.email" required placeholder="Please type in your email..."/>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Phone:
+                <br/>
+                <input type="tel" id="phone" class="form-control" data-ng-model="userData.phone" placeholder="Please type in your phone..."/>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="town">Town:
+                <br/>
+                <select id="town" class="form-control" data-ng-model="userData.townId">
+                    <option value="null">(None)</option>
+                    <option data-ng-repeat="town in towns"
+                            value="{{town.id}}">{{town.name}}</option>
+                </select>
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+    </div>
+
+</div>
