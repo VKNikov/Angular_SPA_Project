@@ -1,8 +1,5 @@
-<div class="box">
-    <div class="text-center">
-        <!--<img src="images/loading.gif" data-ng-hide="ready" alt="Waiting image"/>-->
-        <p data-ng-hide="ready">Loading ads. Please wait...</p>
-    </div>
+<div id="left-sidebar" class="col-md-2" data-ng-include="'views/sidebars/left-sidebar.html'" data-ng-controller="LeftSidebarController"></div>
+<div id="middle-screen" class="col-md-8">
     <ul class="ads">
         <li data-ng-repeat="ad in adsData.ads" class="box">
             <h1>{{ad.title}}</h1>
@@ -18,6 +15,7 @@
             </div>
         </li>
     </ul>
+
     <div class="text-center">
         <pagination
                 page="pageParams.startPage" total-items="adsData.numItems" items-per-page="pageParams.pageSize" ng-model="pageParams.currentPage"
@@ -25,8 +23,17 @@
                 last-text=">>" max-size="9">
         </pagination>
     </div>
+</div>
 
-    <div data-ng-if="adsData.ads.length==0" class="box no-data">
-        No ads found.
-    </div>
+<div id="right-sidebar" class="col-md-2" data-ng-include="'views/sidebars/right-sidebar.html'" data-ng-controller="RightSidebarController"></div>
+
+<div class="text-center">
+    <!--<img src="images/loading.gif" data-ng-hide="ready" alt="Waiting image"/>-->
+    <p data-ng-hide="ready">Loading ads. Please wait...</p>
+</div>
+
+
+
+<div data-ng-if="adsData.ads.length==0" class="box no-data">
+    No ads found.
 </div>

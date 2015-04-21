@@ -99,7 +99,7 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
         publishAgain: publishAgain,
         deleteAd: deleteAdById,
         editAd: editAd
-    }
+    };
 }])
     .factory('categoriesService', ['$resource', 'baseUrl', function($resource, baseUrl) {
         "use strict";
@@ -112,7 +112,7 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
 
         return {
             getAllCategories: getAllCategories
-        }
+        };
     }])
     .factory('townsService', ['$resource', 'baseUrl', function($resource, baseUrl) {
         "use strict";
@@ -125,7 +125,7 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
 
         return {
             getAllTowns: getAllTowns
-        }
+        };
     }])
     .factory('notifyService', [function() {
         "use strict";
@@ -153,7 +153,6 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
             if (serverError && serverError.message) {
                 errors.push(serverError.message);
             }
-
             if (serverError && serverError.modelState) {
                 var modelStateErrors = serverError.modelState;
                 for (var propertyName in modelStateErrors) {
@@ -182,5 +181,5 @@ app.factory('adsService', ['$resource', '$http', 'baseUrl', function($resource, 
             info: operationInfo,
             success: operationSuccessful,
             failure: operationFailure
-        }
+        };
     }]);

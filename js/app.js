@@ -43,8 +43,8 @@ var app = angular.module('app', ['ngResource', 'ngRoute', 'validation.match', 'L
 
         //localStorageServiceProvider.setStorageType('localStorage');
     }])
-    .constant('baseUrl', 'http://softuni-ads.azurewebsites.net/api/')
-    //.constant('baseUrl', 'http://localhost:1337/api/')
+    //.constant('baseUrl', 'http://softuni-ads.azurewebsites.net/api/')
+    .constant('baseUrl', 'http://localhost:1337/api/')
     .run(['$rootScope', '$location', 'authenticationService', function ($rootScope, $location, authenticationService) {
         $rootScope.$on('$locationChangeStart', function (event) {
             if ($location.path().indexOf("/user/") != -1 && !authenticationService.isLoggedIn()) {
